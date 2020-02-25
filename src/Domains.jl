@@ -1,8 +1,9 @@
 
 module Domains
 
-using JSON, Proj4
 
+# This struct is not used at the moment 
+# Could parse JSON to struct
 struct Domain     
     NLON::Int
     NLAT::Int

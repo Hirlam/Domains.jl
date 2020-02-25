@@ -1,52 +1,64 @@
 
 
 using Test
-using Domains, JSON, Proj4
+using Domains, JSON, Proj4, JSONSchema
 
-jsondir = joinpath(dirname(pathof(Domains)), "json")
+moduledir = dirname(pathof(Domains))
+jsondir = joinpath(moduledir, "json")
+jsonschemafile = joinpath(moduledir, "jsonschema/domain.schema.json")
 domains = readdir(jsondir)
 
-# For now exclude non lambert domains
-filter!(d -> d!="SCANDINAVIA_ROTM.json", domains)   
+# For now exclude non lambert domains from tests
+filter!(d->d ∉ ["SCANDINAVIA_ROTM.json","NORWAY_POLAR.json", "RCR_POLAR.json"], domains)   
+
  
-Rearth = 6.371e6
+Rearth = 6.37122e6
 
-testlon(lon) = -180.0 <= lon <= 180.0
-testlat(lat) =  -90.0 <= lat <=  90.0
-testlonlat(lonlat) = testlon(lonlat[1]) & testlat(lonlat[2])
-
-
-@testset "Proj" begin  
+# Test that the North Pole is outside the domain. 
+@testset "North Pole" begin  
     for domain in domains  
-        d = JSON.parsefile(joinpath(jsondir, domain)) 
+        d = JSON.parsefile(joinpath(jsondir, domain))        
+        
+        nlon, nlat   = d["NLON"], d["NLAT"]
+        lon0, lat0   = d["LON0"], d["LAT0"]
+        lonc, latc   = d["LONC"], d["LATC"]
+        gsize        = d["GSIZE"]
+        ezone        = get(d, "EZONE", 11)   # Perhaps include ezone in json files 
 
         Plonlat = Proj4.Projection("+proj=longlat +R=$Rearth")
-        Plcca   = Proj4.Projection("+proj=lcca    +R=$Rearth +lat_0=$(d["LAT0"]) +lon_0=$(d["LON0"])") 
+        Plcc    = Proj4.Projection("+proj=lcc     +R=$Rearth +lat_0=$lat0 +lon_0=$lon0 +lat_1=$lat0 +lat_2=$lat0 +a=$Rearth +b=$Rearth") 
         
-        lcca2lonlat(xy)     = Proj4.transform(Plcca, Plonlat, xy)
-        lonlat2lcca(lonlat) = Proj4.transform(Plonlat, Plcca, lonlat)
+        lonlat2lcc(lonlat) = Proj4.transform(Plonlat, Plcc,  lonlat)
+        lcc2lonlat(xy)     = Proj4.transform(Plcc, Plonlat,  xy)
 
-        (xc, yc) = lonlat2lcca([d["LONC"], d["LATC"]])
-        gsize = d["GSIZE"]
-        nlon = d["NLON"]
-        nlat = d["NLAT"]
-        ezone = get(d,"EZONE",11)   # we should include ezone in json files 
+        (xc, yc)   = lonlat2lcc([lonc,latc])
+        
+        
 
         xl  = xc - gsize * (nlon - ezone - 1) / 2
         xr  = xc + gsize * (nlon - ezone - 1) / 2
         yt  = yc + gsize * (nlat - ezone - 1) / 2
         yb  = yc - gsize * (nlat - ezone - 1) / 2
-        xre = xr + gsize*ezone
-        yte = yt + gsize*ezone
+        xre = xr + gsize * ezone
+        yte = yt + gsize * ezone
 
         # North pole
-        (xn, yn) = lonlat2lcca([ 0 , 90])        
+        (xn, yn) = lonlat2lcc([ 0 , 90])        
 
-        # Check that North pole is not inside domain
-        println(d["NAME"])
         @test !((xl < xn < xre) & (yb < yn < yte ))
-
     end 
-end
+end # @testset "North Pole" begin 
+
+# Validate domain against schema file
+@testset "JSONSchema" begin
+        schema = JSONSchema.Schema(read(jsonschemafile,String),parentFileDirectory="$moduledir/jsonschema")
+        for domain in domains  
+            d = JSON.parsefile(joinpath(jsondir, domain)) 
+            if d["NAME"] != "MUSC"  # MUSC domain will fail because NLAT is not even.
+                 @test JSONSchema.isvalid(d,schema) 
+            end 
+        end 
+    end
+  
 
 

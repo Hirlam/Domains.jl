@@ -7,6 +7,7 @@ moduledir = dirname(pathof(Domains))
 jsondir = joinpath(moduledir, "json")
 jsonschemafile = joinpath(moduledir, "jsonschema/domain.schema.json")
 domains = readdir(jsondir)
+schema = JSONSchema.Schema(read(jsonschemafile, String), parentFileDirectory = "$moduledir/jsonschema")
 
 # For now exclude non lambert domains from tests
 filter!(d->d ∉ ["SCANDINAVIA_ROTM.json","NORWAY_POLAR.json", "RCR_POLAR.json"], domains)   
@@ -51,14 +52,12 @@ end # @testset "North Pole" begin
 
 # Validate domain against schema file
 @testset "JSONSchema" begin
-        schema = JSONSchema.Schema(read(jsonschemafile,String),parentFileDirectory="$moduledir/jsonschema")
-        for domain in domains  
-            d = JSON.parsefile(joinpath(jsondir, domain)) 
-            if d["NAME"] != "MUSC"  # MUSC domain will fail because NLAT is not even.
-                 @test JSONSchema.isvalid(d,schema) 
-            end 
-        end 
-    end
+    
+    for domain in domains  
+        d = JSON.parsefile(joinpath(jsondir, domain)) 
+        @test JSONSchema.isvalid(d, schema) 
+    end 
+end
   
 
 

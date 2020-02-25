@@ -12,6 +12,8 @@ i5m = floor(Int,log(5,max))
 
 # i2 start from 1 because we need even numbers
 vals = [2^i2*3^i3*5^i5 for i2 =1:i2m for i3 =0:i3m for i5=0:i5m]
+push!(vals,1)   # 1 is allowed for MUSC domain
+
 vals = sort(filter(x -> x <= max, vals))
 
 

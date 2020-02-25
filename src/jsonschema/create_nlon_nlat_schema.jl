@@ -5,11 +5,14 @@ filename = @__FILE__
 
 max=3000
 
-i2s = 1:1:convert(Int,floor(log(2,max))) # i2 start from 1 because we need even numbers
-i3s = 0:1:convert(Int,floor(log(3,max)))
-i5s = 0:1:convert(Int,floor(log(5,max)))
+# Maximum possible values e.g. 2^i2m < max
+i2m = floor(Int,log(2,max))
+i3m = floor(Int,log(3,max))
+i5m = floor(Int,log(5,max))
 
-vals = sort(filter(x -> x <= max, [2^i2*3^i3*5^i5 for i2 in i2s for i3 in i3s for i5 in i5s]))
+# i2 start from 1 because we need even numbers
+vals = [2^i2*3^i3*5^i5 for i2 =1:i2m for i3 =0:i3m for i5=0:i5m]
+vals = sort(filter(x -> x <= max, vals))
 
 
 r = OrderedCollections.OrderedDict()

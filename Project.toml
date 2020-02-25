@@ -1,0 +1,10 @@
+name = "Domains"
+uuid = "8047f4c8-798f-41f9-bdd5-7e8534b999d6"
+authors = ["Roel Stappers <roel.stappers@met.no>"]
+version = "0.1.0"
+
+[deps]
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+JSONSchema = "7d188eb4-7ad8-530c-ae41-71a32a6d4692"
+Proj4 = "9a7e659c-8ee8-5706-894e-f68f43bc57ea"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

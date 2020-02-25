@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Hirlam/Domains.jl.svg?branch=master)](https://travis-ci.com/Hirlam/Domains.jl)
+
 # Domains.jl
 
 There are four projections available in HARMONIE, polar stereographic, lambert, mercator and rotated mercator. The model itself chooses the best (least distortion) projection among the first three given your domain specifications. The rotated mercator projection is selected through the variable LROTMER. Note that the polar stereographic project is defined at 90°N(S) whereas in GRIB1 it is defined at 60°N(S). 

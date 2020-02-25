@@ -32,23 +32,19 @@ testlonlat(lonlat) = testlon(lonlat[1]) & testlat(lonlat[2])
         nlat = d["NLAT"]
         ezone = get(d,"EZONE",11)   # we should include ezone in json files 
 
-        left   = xc - gsize * (nlon - ezone - 1) / 2
-        right  = xc + gsize * (nlon - ezone - 1) / 2
-        top    = yc + gsize * (nlat - ezone - 1) / 2
-        bottom = yc - gsize * (nlat - ezone - 1) / 2
+        xl  = xc - gsize * (nlon - ezone - 1) / 2
+        xr  = xc + gsize * (nlon - ezone - 1) / 2
+        yt  = yc + gsize * (nlat - ezone - 1) / 2
+        yb  = yc - gsize * (nlat - ezone - 1) / 2
+        xre = xr + gsize*ezone
+        yte = yt + gsize*ezone
 
-        println(d["NAME"],lcca2lonlat([left top]),lcca2lonlat([right top]))
+        # North pole
+        (xn, yn) = lonlat2lcca([ 0 , 90])        
 
-        @test testlonlat(lcca2lonlat([left top]))
-        @test testlonlat(lcca2lonlat([right top]))
-        @test testlonlat(lcca2lonlat([right bottom]))
-        @test testlonlat(lcca2lonlat([left bottom]))
-         
-
-
-
-        
-
+        # Check that North pole is not inside domain
+        println(d["NAME"])
+        @test !((xl < xn < xre) & (yb < yn < yte ))
 
     end 
 end

@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":58.0,"LATC":58.0,"LON0":8.0,"LONC":8.0,"NAME":"H2500","NLAT":750,"NLON":1000,"TSTEP":60}
+{
+"NAME" : "H2500",
+"TSTEP" : 60,
+"NLON" : 1000,
+"NLAT" : 750,
+"LONC" : 8.0,
+"LATC" : 58.0,
+"LON0" : 8.0,
+"LAT0" : 58.0,
+"GSIZE" : 58.0,
+"EZONE" : 11 
+}

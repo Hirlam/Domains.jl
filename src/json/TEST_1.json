@@ -1,1 +1,12 @@
-{"GSIZE":1000.0,"LAT0":59.2,"LATC":59.2,"LON0":-10.0,"LONC":14.0,"NAME":"TEST_1","NLAT":50,"NLON":50,"TSTEP":30}
+{
+"NAME" : "TEST_1",
+"TSTEP" : 30,
+"NLON" : 50,
+"NLAT" : 50,
+"LONC" : 14.0,
+"LATC" : 59.2,
+"LON0" : -10.0,
+"LAT0" : 59.2,
+"GSIZE" : 59.2,
+"EZONE" : 11 
+}

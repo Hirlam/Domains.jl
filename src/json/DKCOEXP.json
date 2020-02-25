@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":56.3,"LATC":56.3,"LON0":0.0,"LONC":9.9,"NAME":"DKCOEXP","NLAT":648,"NLON":648,"TSTEP":75}
+{
+"NAME" : "DKCOEXP",
+"TSTEP" : 75,
+"NLON" : 648,
+"NLAT" : 648,
+"LONC" : 9.9,
+"LATC" : 56.3,
+"LON0" : 0.0,
+"LAT0" : 56.3,
+"GSIZE" : 56.3,
+"EZONE" : 11 
+}

@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":53.5,"LATC":53.5,"LON0":5.0,"LONC":-7.5,"NAME":"IRELAND25","NLAT":500,"NLON":540,"TSTEP":75}
+{
+"NAME" : "IRELAND25",
+"TSTEP" : 75,
+"NLON" : 540,
+"NLAT" : 500,
+"LONC" : -7.5,
+"LATC" : 53.5,
+"LON0" : 5.0,
+"LAT0" : 53.5,
+"GSIZE" : 53.5,
+"EZONE" : 11 
+}

@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":39.0,"LATC":39.0,"LON0":35.0,"LONC":35.0,"NAME":"TURKEY_2.5","NLAT":512,"NLON":1000,"TSTEP":60}
+{
+"NAME" : "TURKEY_2.5",
+"TSTEP" : 60,
+"NLON" : 1000,
+"NLAT" : 512,
+"LONC" : 35.0,
+"LATC" : 39.0,
+"LON0" : 35.0,
+"LAT0" : 39.0,
+"GSIZE" : 39.0,
+"EZONE" : 11 
+}

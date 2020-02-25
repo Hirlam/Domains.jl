@@ -1,1 +1,12 @@
-{"GSIZE":30000.0,"LAT0":55.0,"LATC":55.0,"LON0":-15.0,"LONC":-15.0,"NAME":"TEST_OBS","NLAT":270,"NLON":360,"TSTEP":300}
+{
+"NAME" : "TEST_OBS",
+"TSTEP" : 300,
+"NLON" : 360,
+"NLAT" : 270,
+"LONC" : -15.0,
+"LATC" : 55.0,
+"LON0" : -15.0,
+"LAT0" : 55.0,
+"GSIZE" : 55.0,
+"EZONE" : 11 
+}

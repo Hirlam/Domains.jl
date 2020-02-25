@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":29.0,"LATC":29.0,"LON0":-17.5,"LONC":-17.5,"NAME":"CANARIAS_2.5","NLAT":480,"NLON":576,"TSTEP":60}
+{
+"NAME" : "CANARIAS_2.5",
+"TSTEP" : 60,
+"NLON" : 576,
+"NLAT" : 480,
+"LONC" : -17.5,
+"LATC" : 29.0,
+"LON0" : -17.5,
+"LAT0" : 29.0,
+"GSIZE" : 29.0,
+"EZONE" : 11 
+}

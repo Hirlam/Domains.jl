@@ -1,1 +1,12 @@
-{"EZONE":0,"GSIZE":2500.0,"LAT0":59.2,"LATC":59.2,"LON0":14.0,"LONC":14.0,"NAME":"MUSC","NLAT":1,"NLON":4,"NMSMAX":1,"NSMAX":0,"TSTEP":60}
+{
+"NAME" : "MUSC",
+"TSTEP" : 60,
+"NLON" : 4,
+"NLAT" : 1,
+"LONC" : 14.0,
+"LATC" : 59.2,
+"LON0" : 14.0,
+"LAT0" : 59.2,
+"GSIZE" : 59.2,
+"EZONE" : 11 
+}

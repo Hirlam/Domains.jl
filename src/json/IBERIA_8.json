@@ -1,1 +1,12 @@
-{"GSIZE":8000.0,"LAT0":40.0,"LATC":40.0,"LON0":-5.0,"LONC":-5.0,"NAME":"IBERIA_8","NLAT":500,"NLON":486,"TSTEP":300}
+{
+"NAME" : "IBERIA_8",
+"TSTEP" : 300,
+"NLON" : 486,
+"NLAT" : 500,
+"LONC" : -5.0,
+"LATC" : 40.0,
+"LON0" : -5.0,
+"LAT0" : 40.0,
+"GSIZE" : 40.0,
+"EZONE" : 11 
+}

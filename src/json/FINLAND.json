@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":64.0,"LATC":64.0,"LON0":13.0,"LONC":25.5,"NAME":"FINLAND","NLAT":600,"NLON":300,"TSTEP":60}
+{
+"NAME" : "FINLAND",
+"TSTEP" : 60,
+"NLON" : 300,
+"NLAT" : 600,
+"LONC" : 25.5,
+"LATC" : 64.0,
+"LON0" : 13.0,
+"LAT0" : 64.0,
+"GSIZE" : 64.0,
+"EZONE" : 11 
+}

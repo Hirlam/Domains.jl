@@ -1,1 +1,12 @@
-{"EZONE":11,"GSIZE":2500.0,"LAT0":65.0,"LATC":64,"LON0":-55.0,"LONC":-36,"NAME":"IGA","NLAT":800,"NLON":1000,"TSTEP":75}
+{
+"NAME" : "IGA",
+"TSTEP" : 75,
+"NLON" : 1000,
+"NLAT" : 800,
+"LONC" : -36,
+"LATC" : 64,
+"LON0" : -55.0,
+"LAT0" : 65.0,
+"GSIZE" : 65.0,
+"EZONE" : 11 
+}

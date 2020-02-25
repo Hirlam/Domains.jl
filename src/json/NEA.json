@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":60.0,"LATC":60.0,"LON0":25.0,"LONC":7.0,"NAME":"NEA","NLAT":1080,"NLON":1200,"TSTEP":75}
+{
+"NAME" : "NEA",
+"TSTEP" : 75,
+"NLON" : 1200,
+"NLAT" : 1080,
+"LONC" : 7.0,
+"LATC" : 60.0,
+"LON0" : 25.0,
+"LAT0" : 60.0,
+"GSIZE" : 60.0,
+"EZONE" : 11 
+}

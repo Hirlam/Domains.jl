@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":58.0,"LATC":58.0,"LON0":8.0,"LONC":8.0,"NAME":"AROME_2.5","NLAT":800,"NLON":800,"NMSMAX":399,"NSMAX":399,"TSTEP":60}
+{
+"NAME" : "AROME_2.5",
+"TSTEP" : 60,
+"NLON" : 800,
+"NLAT" : 800,
+"LONC" : 8.0,
+"LATC" : 58.0,
+"LON0" : 8.0,
+"LAT0" : 58.0,
+"GSIZE" : 58.0,
+"EZONE" : 11 
+}

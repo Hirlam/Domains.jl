@@ -3,23 +3,24 @@
 using Test
 using Domains, JSON, Proj4, JSONSchema
 
-moduledir = dirname(pathof(Domains))
-jsondir = joinpath(moduledir, "json")
-jsonschemafile = joinpath(moduledir, "jsonschema/domain.schema.json")
-domains = readdir(jsondir)
-schema = JSONSchema.Schema(read(jsonschemafile, String), parentFileDirectory = "$moduledir/jsonschema")
 
-# For now exclude non lambert domains from tests
-filter!(d->d ∉ ["SCANDINAVIA_ROTM.json","NORWAY_POLAR.json", "RCR_POLAR.json"], domains)   
-
- 
-Rearth = 6.37122e6
+# Validate domain against schema file
+@testset "JSONSchema" begin   
+    schema = JSONSchema.Schema(read(Domains.jsonschemafile, String), parentFileDirectory = dirname(Domains.jsonschemafile)) 
+    for domain in Domains.domains  
+        d = readdomain(domain)
+        @test JSONSchema.isvalid(d, schema) 
+    end 
+end
 
 # Test that the North Pole is outside the domain. 
-@testset "North Pole" begin  
-    for domain in domains  
-        d = JSON.parsefile(joinpath(jsondir, domain))        
-        
+@testset "North Pole" begin      
+    Rearth = 6.37122e6
+
+    # For now exclude non lambert domains from test    
+    for domain in filter(d->d ∉ ["SCANDINAVIA_ROTM","NORWAY_POLAR", "RCR_POLAR"], Domains.domains)     
+        d = readdomain(domain) 
+
         nlon, nlat   = d["NLON"], d["NLAT"]
         lon0, lat0   = d["LON0"], d["LAT0"]
         lonc, latc   = d["LONC"], d["LATC"]
@@ -50,14 +51,6 @@ Rearth = 6.37122e6
     end 
 end # @testset "North Pole" begin 
 
-# Validate domain against schema file
-@testset "JSONSchema" begin
-    
-    for domain in domains  
-        d = JSON.parsefile(joinpath(jsondir, domain)) 
-        @test JSONSchema.isvalid(d, schema) 
-    end 
-end
   
 
 

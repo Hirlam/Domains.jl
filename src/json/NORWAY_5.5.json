@@ -1,1 +1,12 @@
-{"GSIZE":5500.0,"LAT0":68.0,"LATC":66.0,"LON0":-40.0,"LONC":13.0,"NAME":"NORWAY_5.5","NLAT":810,"NLON":540,"TSTEP":120}
+{
+"NAME" : "NORWAY_5.5",
+"TSTEP" : 120,
+"NLON" : 540,
+"NLAT" : 810,
+"LONC" : 13.0,
+"LATC" : 66.0,
+"LON0" : -40.0,
+"LAT0" : 68.0,
+"GSIZE" : 68.0,
+"EZONE" : 11 
+}

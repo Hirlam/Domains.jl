@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":65.0,"LATC":62.3,"LON0":11.0,"LONC":14.0,"NAME":"SWEDEN_2.5","NLAT":648,"NLON":450,"TSTEP":60}
+{
+"NAME" : "SWEDEN_2.5",
+"TSTEP" : 60,
+"NLON" : 450,
+"NLAT" : 648,
+"LONC" : 14.0,
+"LATC" : 62.3,
+"LON0" : 11.0,
+"LAT0" : 65.0,
+"GSIZE" : 65.0,
+"EZONE" : 11 
+}

@@ -1,1 +1,12 @@
-{"GSIZE":2500.0,"LAT0":64.7,"LATC":64.7,"LON0":-19.0,"LONC":-19.0,"NAME":"ICELAND","NLAT":480,"NLON":500,"TSTEP":45}
+{
+"NAME" : "ICELAND",
+"TSTEP" : 45,
+"NLON" : 500,
+"NLAT" : 480,
+"LONC" : -19.0,
+"LATC" : 64.7,
+"LON0" : -19.0,
+"LAT0" : 64.7,
+"GSIZE" : 64.7,
+"EZONE" : 11 
+}

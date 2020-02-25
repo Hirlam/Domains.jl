@@ -1,1 +1,12 @@
-{"GSIZE":11000.0,"LAT0":45.0,"LATC":52.3,"LON0":35.0,"LONC":-4.5,"NAME":"GLAMEPS_v0","NLAT":432,"NLON":512,"TSTEP":400}
+{
+"NAME" : "GLAMEPS_v0",
+"TSTEP" : 400,
+"NLON" : 512,
+"NLAT" : 432,
+"LONC" : -4.5,
+"LATC" : 52.3,
+"LON0" : 35.0,
+"LAT0" : 45.0,
+"GSIZE" : 45.0,
+"EZONE" : 11 
+}

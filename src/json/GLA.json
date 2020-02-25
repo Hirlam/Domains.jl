@@ -1,1 +1,12 @@
-{"EZONE":11,"GSIZE":2000.0,"LAT0":61.0,"LATC":62.1,"LON0":-10.0,"LONC":-47.8,"NAME":"GLA","NLAT":400,"NLON":200,"TSTEP":30}
+{
+"NAME" : "GLA",
+"TSTEP" : 30,
+"NLON" : 200,
+"NLAT" : 400,
+"LONC" : -47.8,
+"LATC" : 62.1,
+"LON0" : -10.0,
+"LAT0" : 61.0,
+"GSIZE" : 61.0,
+"EZONE" : 11 
+}

@@ -6,7 +6,7 @@ There are four projections available in HARMONIE, polar stereographic, lambert, 
 
 For each domain we set variables related to the geometry and the resolution like:
 
-HARMONIE model domains are defined in settings in Harmonie_domains.pm​. The following variables related to the geometry and the resolution are required:
+The following variables related to the geometry and the resolution are required:
 
 * TSTEP is model timestep in seconds
 * NLON is number of points in x-direction.

@@ -1,7 +1,7 @@
 #!/usr/bin/env julia
 
 using OrderedCollections,JSON
-filename = @__FILE__
+filename = basename(@__FILE__)
 
 max=3000
 

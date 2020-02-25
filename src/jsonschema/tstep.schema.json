@@ -1,5 +1,5 @@
 {
-    "$comment": "File created by /media/roels/_disk2/git/Hirlam/Domains/src/jsonschema/create_tstep_schema.jl",
+    "$comment": "File created by create_tstep_schema.jl",
     "type": "integer",
     "enum": [
         1,

@@ -3,7 +3,13 @@ module Domains
 
 using Unmarshal, Glob,JSON, Proj4
 import Base
-export readdomain, Domain, in, lonlat2lcc, lcc2lonlat
+
+export Domain,
+       lonlat2lcc,
+       lcc2lonlat,
+       in,       
+       readdomain, 
+       getgridpoints
 
 struct Domain     
     NAME::String
@@ -15,7 +21,7 @@ struct Domain
     LON0::Float64
     LAT0::Float64    
     GSIZE::Float64
-    EZONE::Int   
+    EZONE::Int           
 end
 
 const moduledir = dirname(pathof(Domains))

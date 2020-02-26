@@ -34,11 +34,14 @@ const domains = getindex.(splitext.(basename.(Glob.glob("*.json",jsondir))),1)
     returns a `Domain` 
 
 """
-readdomain(domainname) =  unmarshal(Domain,JSON.parsefile(joinpath(jsondir, "$domainname.json")))
+readdomain(domainname::String) =  unmarshal(Domain,JSON.parsefile(joinpath(jsondir, "$domainname.json")))
 
-
-
-function lonlat2lcc(d,lonlat)     
+"""
+    lonlat2lcc(d,lonlat)  
+    
+Returns Lambert Conformal Conic projection coordinates for lonlat using domain definition from `d`
+"""
+function lonlat2lcc(d::Domain,lonlat)     
 
     nlon, nlat   = d.NLON, d.NLAT
     lon0, lat0   = d.LON0, d.LAT0
@@ -51,7 +54,12 @@ function lonlat2lcc(d,lonlat)
     return Proj4.transform(Plonlat, Plcc,  lonlat)
 end 
 
-function lcc2lonlat(d,xy)    
+"""
+    lcc2lonlat(d,xy)  
+    
+Returns lonlat coordinates for Lambert Conformal Conic projection coordinates `xy` using domain definitions from `d`
+"""
+function lcc2lonlat(d::Domain,xy)    
 
     nlon, nlat   = d.NLON, d.NLAT
     lon0, lat0   = d.LON0, d.LAT0
@@ -64,8 +72,6 @@ function lcc2lonlat(d,xy)
     return Proj4.transform(Plcc, Plonlat,  xy)
 
 end 
-
-
 
 include("in.jl")
 

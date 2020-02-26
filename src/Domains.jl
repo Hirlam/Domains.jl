@@ -43,11 +43,7 @@ Returns Lambert Conformal Conic projection coordinates for lonlat using domain d
 """
 function lonlat2lcc(d::Domain,lonlat)     
 
-    nlon, nlat   = d.NLON, d.NLAT
     lon0, lat0   = d.LON0, d.LAT0
-    lonc, latc   = d.LONC, d.LATC
-    gsize        = d.GSIZE
-    ezone        = d.EZONE
     Plonlat = Proj4.Projection("+proj=longlat +R=$Rearth")
     Plcc    = Proj4.Projection("+proj=lcc     +R=$Rearth +lat_0=$lat0 +lon_0=$lon0 +lat_1=$lat0 +lat_2=$lat0 +a=$Rearth +b=$Rearth") 
 
@@ -61,11 +57,7 @@ Returns lonlat coordinates for Lambert Conformal Conic projection coordinates `x
 """
 function lcc2lonlat(d::Domain,xy)    
 
-    nlon, nlat   = d.NLON, d.NLAT
     lon0, lat0   = d.LON0, d.LAT0
-    lonc, latc   = d.LONC, d.LATC
-    gsize        = d.GSIZE
-    ezone        = d.EZONE
     Plonlat = Proj4.Projection("+proj=longlat +R=$Rearth")
     Plcc    = Proj4.Projection("+proj=lcc     +R=$Rearth +lat_0=$lat0 +lon_0=$lon0 +lat_1=$lat0 +lat_2=$lat0 +a=$Rearth +b=$Rearth") 
 
@@ -73,7 +65,26 @@ function lcc2lonlat(d::Domain,xy)
 
 end 
 
+"""
+    getgridpoints(d; gsize=d.GSIZE)
+
+Returns an array with the latlon coordinates of the grid points
+"""
+function getgridpoints(d; gsize=d.GSIZE)
+    v = get_lcc_val(d) 
+    xval = range(v.xl,stop = v.xr, step = gsize)
+    yval = range(v.yb,stop = v.yt, step = gsize)
+
+    lon0, lat0   = d.LON0, d.LAT0
+    Plonlat = Proj4.Projection("+proj=longlat +R=$Rearth")
+    Plcc    = Proj4.Projection("+proj=lcc     +R=$Rearth +lat_0=$lat0 +lon_0=$lon0 +lat_1=$lat0 +lat_2=$lat0 +a=$Rearth +b=$Rearth") 
+
+    return [Proj4.transform(Plcc, Plonlat, [x,y]) for x in xval for y in yval]
+end 
+
+
 include("in.jl")
+include("get_lcc_val.jl")
 
 end #module Domains
 

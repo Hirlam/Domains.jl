@@ -1,7 +1,7 @@
 
 module Domains
 
-using Unmarshal, Glob,JSON, Proj4
+using Unmarshal, Glob, JSON, Proj4
 import Base
 
 export Domain,
@@ -14,8 +14,8 @@ export Domain,
 
 const moduledir = dirname(pathof(Domains))
 const jsondir = joinpath(moduledir, "json")
-const jsonschemafile = joinpath(moduledir , "jsonschema/domain.schema.json")
-const domains = getindex.(splitext.(basename.(Glob.glob("*.json",jsondir))),1) # Array with domain names  
+const jsonschemafile = joinpath(moduledir, "jsonschema/domain.schema.json")
+const domains = getindex.(splitext.(basename.(Glob.glob("*.json", jsondir))), 1) # Array with domain names  
 const Rearth = 6.37122e6
 
 struct Domain     
@@ -52,21 +52,21 @@ Plonlat() = Proj4.Projection("+proj=longlat +R=$Rearth")
 
 Returns a `Domain`  
 """
-readdomain(domainname::String) =  unmarshal(Domain,JSON.parsefile(joinpath(jsondir, "$domainname.json")))
+readdomain(domainname::String) =  unmarshal(Domain, JSON.parsefile(joinpath(jsondir, "$domainname.json")))
 
 """
     lonlat2lcc(d,lonlat)  
     
 Returns Lambert Conformal Conic projection coordinates for lonlat using domain definition from `d`
 """
-lonlat2lcc(d::Domain,lonlat) =  Proj4.transform(Plonlat(), Plcc(d) ,  lonlat)
+lonlat2lcc(d::Domain, lonlat) = Proj4.transform(Plonlat(), Plcc(d),  lonlat)
 
 """
     lcc2lonlat(d,xy)  
     
 Returns lonlat coordinates for Lambert Conformal Conic projection coordinates `xy` using domain definitions from `d`
 """
-lcc2lonlat(d::Domain,xy) = Proj4.transform(Plcc(d), Plonlat(),  xy)
+lcc2lonlat(d::Domain, xy) = Proj4.transform(Plcc(d), Plonlat(),  xy)
 
 
 """
@@ -74,20 +74,20 @@ lcc2lonlat(d::Domain,xy) = Proj4.transform(Plcc(d), Plonlat(),  xy)
 
 Returns an array with the latlon coordinates of the grid points
 """
-function getgridpoints(d; gsize=d.GSIZE)
+function getgridpoints(d; gsize = d.GSIZE)
     v = get_lcc_val(d) 
-    xval = range(v.xl,stop = v.xr, step = gsize)
-    yval = range(v.yb,stop = v.yt, step = gsize)
-
-   
-    return [Proj4.transform(Plcc(d), Plonlat(), [x,y]) for x in xval for y in yval]
+    xval = range(v.xl, stop = v.xr, step = gsize)
+    yval = range(v.yb, stop = v.yt, step = gsize)
+    lcc = Plcc(d)
+    lonlat = Plonlat()   
+    return [Proj4.transform(lcc, lonlat, [x, y]) for x in xval for y in yval]
 end 
 
 
 include("in.jl")
 include("get_lcc_val.jl")
 
-end #module Domains
+end # module Domains
 
 
 

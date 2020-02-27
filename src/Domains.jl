@@ -11,6 +11,13 @@ export Domain,
        readdomain, 
        getgridpoints
 
+
+const moduledir = dirname(pathof(Domains))
+const jsondir = joinpath(moduledir, "json")
+const jsonschemafile = joinpath(moduledir , "jsonschema/domain.schema.json")
+const domains = getindex.(splitext.(basename.(Glob.glob("*.json",jsondir))),1) # Array with domain names  
+const Rearth = 6.37122e6
+
 struct Domain     
     NAME::String
     TSTEP::Int
@@ -24,21 +31,26 @@ struct Domain
     EZONE::Int           
 end
 
-const moduledir = dirname(pathof(Domains))
-const jsondir = joinpath(moduledir, "json")
-const jsonschemafile = joinpath(moduledir , "jsonschema/domain.schema.json")
-const Rearth = 6.37122e6
 
-# const domains = [unmarshal(Domain, JSON.parsefile(f)) for f in Glob.glob("*.json",jsondir)] 
+"""
+    Plcc(d)
 
-# domains is an array with domain filenames 
-const domains = getindex.(splitext.(basename.(Glob.glob("*.json",jsondir))),1)
+Returns a Lambert Conformal Conic Proj4.Projection based on domain definitions in `d`
+"""
+Plcc(d::Domain) = Proj4.Projection("+proj=lcc +R=$Rearth +lat_0=$(d.LAT0) +lon_0=$(d.LON0) +lat_1=$(d.LAT0) +lat_2=$(d.LAT0) +a=$Rearth +b=$Rearth") 
+
+"""
+    Plonlat()
+
+Returns longlat Proj4.Projection
+"""
+Plonlat() = Proj4.Projection("+proj=longlat +R=$Rearth")
+
 
 """
     readdomain(domainname)
 
-    returns a `Domain` 
-
+Returns a `Domain`  
 """
 readdomain(domainname::String) =  unmarshal(Domain,JSON.parsefile(joinpath(jsondir, "$domainname.json")))
 
@@ -47,29 +59,15 @@ readdomain(domainname::String) =  unmarshal(Domain,JSON.parsefile(joinpath(jsond
     
 Returns Lambert Conformal Conic projection coordinates for lonlat using domain definition from `d`
 """
-function lonlat2lcc(d::Domain,lonlat)     
-
-    lon0, lat0   = d.LON0, d.LAT0
-    Plonlat = Proj4.Projection("+proj=longlat +R=$Rearth")
-    Plcc    = Proj4.Projection("+proj=lcc     +R=$Rearth +lat_0=$lat0 +lon_0=$lon0 +lat_1=$lat0 +lat_2=$lat0 +a=$Rearth +b=$Rearth") 
-
-    return Proj4.transform(Plonlat, Plcc,  lonlat)
-end 
+lonlat2lcc(d::Domain,lonlat) =  Proj4.transform(Plonlat(), Plcc(d) ,  lonlat)
 
 """
     lcc2lonlat(d,xy)  
     
 Returns lonlat coordinates for Lambert Conformal Conic projection coordinates `xy` using domain definitions from `d`
 """
-function lcc2lonlat(d::Domain,xy)    
+lcc2lonlat(d::Domain,xy) = Proj4.transform(Plcc(d), Plonlat(),  xy)
 
-    lon0, lat0   = d.LON0, d.LAT0
-    Plonlat = Proj4.Projection("+proj=longlat +R=$Rearth")
-    Plcc    = Proj4.Projection("+proj=lcc     +R=$Rearth +lat_0=$lat0 +lon_0=$lon0 +lat_1=$lat0 +lat_2=$lat0 +a=$Rearth +b=$Rearth") 
-
-    return Proj4.transform(Plcc, Plonlat,  xy)
-
-end 
 
 """
     getgridpoints(d; gsize=d.GSIZE)
@@ -81,11 +79,8 @@ function getgridpoints(d; gsize=d.GSIZE)
     xval = range(v.xl,stop = v.xr, step = gsize)
     yval = range(v.yb,stop = v.yt, step = gsize)
 
-    lon0, lat0   = d.LON0, d.LAT0
-    Plonlat = Proj4.Projection("+proj=longlat +R=$Rearth")
-    Plcc    = Proj4.Projection("+proj=lcc     +R=$Rearth +lat_0=$lat0 +lon_0=$lon0 +lat_1=$lat0 +lat_2=$lat0 +a=$Rearth +b=$Rearth") 
-
-    return [Proj4.transform(Plcc, Plonlat, [x,y]) for x in xval for y in yval]
+   
+    return [Proj4.transform(Plcc(d), Plonlat(), [x,y]) for x in xval for y in yval]
 end 
 
 

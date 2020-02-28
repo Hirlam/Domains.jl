@@ -1,8 +1,8 @@
-# Domain.jl documentation
+# Domains.jl documentation
 
 ## Installation 
 
-You can obtain Domain.jl using Julia's Pkg REPL-mode (hitting `]` as the first character of the command prompt):
+You can obtain Domains.jl using Julia's Pkg REPL-mode (hitting `]` as the first character of the command prompt):
 
 ```julia
 (v1.3) pkg> add https://github.com/Hirlam/Domains.jl

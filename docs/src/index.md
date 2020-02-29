@@ -51,19 +51,17 @@ The following variables related to the geometry and the resolution are required:
 | `EZONE`  | number of points over extension zone in both x- and y-direction |
 | `LMRT`   | switch for rotated Mercator projection. If LMRT=.TRUE. LAT0 should be zero | 
 
-!!! note 
-    If LAT0 = 90, the projection is polar stereographic. 
-    If LAT0 < 90, the projection is lambert unless LMRT=.TRUE.._
+!!! note "Polar stereographic versus Lambert"
 
-!!! note "NLON NLAT"
+    - If `LAT0 = 90`, the projection is polar stereographic
+    - If `LAT0 < 90`, the projection is lambert unless `LMRT = true`
 
-    NLON and NLAT should satisfy the equation 5^a * 3^b * 2^c, where a-c are integers >= 0. 
+!!! note "Restictions on NLON and NLAT"
+
+    `NLON` and `NLAT` should satisfy the equation ``2^a ⋅ 3^b ⋅ 5^c``, where `` a ≥ 1 `` and ``b,c ≥ 0 ``. 
 
 
-```@docs
-lonlat2lcc(d::Domain, lonlat)
-lcc2lonlat(d::Domain, xy)
-readdomain(domainname::String)
-getgridpoints(d; gsize = d.GSIZE)
-Base.in(lonlat, d::Domain; with_ezone::Bool = false)
+```@autodocs
+   Modules = [Domains]
 ```
+

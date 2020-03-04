@@ -19,8 +19,8 @@ The schema validates:
  * Required  fields are present: `TSTEP`,`NLON`,`NLAT`,`LONC`,`LATC`,`LON0`,`LAT0`,`GSIZE`
  * `TSTEP` is a divisor of 3600
  * `NLON` (`NLAT`) are of the form 2ᵃ 3ᵇ 5ᶜ with either a≥1, b≥0,c≥0 or a=b=c=1
- * -180≤ `LON0`,`LATC` ≤ 180
- * -90 ≤ `LAT0`,`LONC` ≤ 90
+ * -180≤ `LON0`,`LONC` ≤ 180
+ * -90 ≤ `LAT0`,`LATC` ≤ 90
  
  `EZONE` is not required but currently present in all domains `EZONE=11`
  

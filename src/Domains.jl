@@ -17,11 +17,11 @@ const jsondir = joinpath(moduledir, "json")
 const jsonschemafile = joinpath(moduledir, "jsonschema/domain.schema.json")
 const domains = getindex.(splitext.(basename.(Glob.glob("*.json", jsondir))), 1) # Array with domain names  
 const Rearth = 6.37122e6
+
 """
    Domain definitions
 """
-struct Domain
-    "Name"  
+struct Domain 
     NAME::String
     TSTEP::Int
     NLON::Int

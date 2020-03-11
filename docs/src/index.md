@@ -57,7 +57,7 @@ The following variables related to the geometry and the resolution are required:
 
 !!! note "Restriction on NLON and NLAT"
 
-    `NLON` and `NLAT` should satisfy the equation ``5^a ⋅ 3^b ⋅ 2^c``, where either ``a ≥ 1, b ≥ 0, c ≥ 0``  or ``a=b=c=0`` 
+    `NLON` and `NLAT` should satisfy the equation ``5^c ⋅ 3^b ⋅ 2^a``, where either ``a ≥ 1, b ≥ 0, c ≥ 0``  or ``a=b=c=0`` 
 
 ## Example
 

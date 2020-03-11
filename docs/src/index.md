@@ -22,12 +22,12 @@ There are four projections available in HARMONIE
 
     The polar stereographic project is defined at 90°N(S) whereas in GRIB1 it is defined at 60°N(S). 
 
-![](projections1.png)
+![](assets/projections1.png)
 
 Polar stereographic, Lambert and Mercator projection
 
 
-![](rotmer.png)
+![](assets/rotmer.png)
 
 Rotated mercator projection
 
@@ -55,9 +55,9 @@ The following variables related to the geometry and the resolution are required:
     If LAT0 = 90, the projection is polar stereographic. 
     If LAT0 < 90, the projection is lambert unless LMRT=.TRUE.._
 
-!!! note "NLON NLAT"
+!!! note Restriction on `NLON` and `NLAT`
 
-    NLON and NLAT should satisfy the equation 5^a * 3^b * 2^c, where a-c are integers >= 0. 
+    `NLON` and `NLAT` should satisfy the equation ``5^a * 3^b * 2^c``, where either ``a ≥ 1, b ≥ 0, c ≥ 0``  or ``a=b=c=0``. 
 
 
 ```@docs

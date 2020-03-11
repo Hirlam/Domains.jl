@@ -52,8 +52,8 @@ The following variables related to the geometry and the resolution are required:
 | `LMRT`   | switch for rotated Mercator projection. If LMRT=.TRUE. LAT0 should be zero | 
 
 !!! note 
-    If `LAT0 = 90`, the projection is polar stereographic. 
-    If `LAT0 < 90`, the projection is lambert unless `LMRT=.TRUE.`._
+      * If `LAT0 = 90`, the projection is polar stereographic. 
+      * If `LAT0 < 90`, the projection is lambert unless `LMRT=.TRUE.`._
 
 !!! note "Restriction on NLON and NLAT"
 
@@ -73,11 +73,10 @@ Will give
 ![](assets/scatter_metcoop25c_100km.png)
 
 
+    `NLON` and `NLAT` should satisfy the equation ``2^a ⋅ 3^b ⋅ 5^c``, where `` a ≥ 1 `` and ``b,c ≥ 0 ``. 
 
-```@docs
-lonlat2lcc(d::Domain, lonlat)
-lcc2lonlat(d::Domain, xy)
-readdomain(domainname::String)
-getgridpoints(d; gsize = d.GSIZE)
-Base.in(lonlat, d::Domain; with_ezone::Bool = false)
+
+```@autodocs
+   Modules = [Domains]
 ```
+

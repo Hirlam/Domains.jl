@@ -18,7 +18,10 @@ const jsonschemafile = joinpath(moduledir, "jsonschema/domain.schema.json")
 const domains = getindex.(splitext.(basename.(Glob.glob("*.json", jsondir))), 1) # Array with domain names  
 const Rearth = 6.37122e6
 
-struct Domain     
+"""
+   Domain definitions
+"""
+struct Domain 
     NAME::String
     TSTEP::Int
     NLON::Int
@@ -35,14 +38,14 @@ end
 """
     Plcc(d)
 
-Returns a Lambert Conformal Conic Proj4.Projection based on domain definitions in `d`
+Returns a Lambert Conformal Conic `Proj4.Projection` based on domain definitions in `d`
 """
 Plcc(d::Domain) = Proj4.Projection("+proj=lcc +R=$Rearth +lat_0=$(d.LAT0) +lon_0=$(d.LON0) +lat_1=$(d.LAT0) +lat_2=$(d.LAT0) +a=$Rearth +b=$Rearth") 
 
 """
     Plonlat()
 
-Returns longlat Proj4.Projection
+Returns longlat `Proj4.Projection`
 """
 Plonlat() = Proj4.Projection("+proj=longlat +R=$Rearth")
 
@@ -57,7 +60,7 @@ readdomain(domainname::String) =  unmarshal(Domain, JSON.parsefile(joinpath(json
 """
     lonlat2lcc(d,lonlat)  
     
-Returns Lambert Conformal Conic projection coordinates for lonlat using domain definition from `d`
+Returns Lambert Conformal Conic projection coordinates for `lonlat` using domain definition from `d`
 """
 lonlat2lcc(d::Domain, lonlat) = Proj4.transform(Plonlat(), Plcc(d),  lonlat)
 
@@ -72,7 +75,7 @@ lcc2lonlat(d::Domain, xy) = Proj4.transform(Plcc(d), Plonlat(),  xy)
 """
     getgridpoints(d; gsize=d.GSIZE)
 
-Returns an array with the latlon coordinates of the grid points
+Returns an array with the lonlat coordinates of the grid points
 """
 function getgridpoints(d; gsize = d.GSIZE)
     v = get_lcc_val(d) 

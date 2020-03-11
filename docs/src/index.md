@@ -73,7 +73,7 @@ Will give
 ![](assets/scatter_metcoop25c_100km.png)
 
 
-    `NLON` and `NLAT` should satisfy the equation ``2^a ⋅ 3^b ⋅ 5^c``, where `` a ≥ 1 `` and ``b,c ≥ 0 ``. 
+## Modules functions    
 
 
 ```@autodocs

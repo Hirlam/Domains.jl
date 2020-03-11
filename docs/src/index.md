@@ -73,7 +73,7 @@ Will give
 ![](assets/scatter_metcoop25c_100km.png)
 
 
-## Modules functions    
+## Module functions    
 
 
 ```@autodocs

@@ -8,7 +8,6 @@ export Domain,
        lonlat2lcc,
        lcc2lonlat,
        in,       
-       readdomain, 
        getgridpoints
 
 

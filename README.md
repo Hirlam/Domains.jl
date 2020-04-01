@@ -7,11 +7,19 @@ Domains.jl
 
 ## Installation 
 
-You can obtain Domains.jl using Julia's Pkg REPL-mode (hitting `]` as the first character of the command prompt):
+You can obtain Domains.jl by
+
+```bash
+git clone https://github.com/Hirlam/Domains.jl
+```
+
+Or using Julia's Pkg REPL-mode (hitting `]` as the first character of the command prompt):
 
 ```julia
 (v1.3) pkg> add https://github.com/Hirlam/Domains.jl
 ```
+
+
 ## Unit tests
 
 The domains in `src/json/` are validated against the json schema file in `src/jsonschema/domain.schema.json`
@@ -24,7 +32,7 @@ The schema validates:
  
  `EZONE` is not required but currently present in all domains `EZONE=11`
  
- In addition ,for domains that use the Lambert projection. tests validate that the north pole is outside the domain. 
+ In addition, for domains that use the Lambert projection, tests validate that the north pole is outside the domain. 
 
 [Documentation](https://hirlam.github.io/Domains.jl/dev)
 

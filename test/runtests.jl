@@ -1,7 +1,7 @@
 
 
 using Test
-using Domains, JSONSchema,JSON, Unmarshal
+using Domains, JSONSchema,JSON
 
 schema = JSONSchema.Schema(read(Domains.jsonschemafile, String), parentFileDirectory = dirname(Domains.jsonschemafile)) 
 
@@ -16,7 +16,7 @@ for domain in filter(d->d ∉ ["SCANDINAVIA_ROTM","NORWAY_POLAR", "RCR_POLAR"], 
         @test JSONSchema.isvalid(d, schema) 
 
         # Test that the North Pole [0, 90] is outside the domain with ezone. 
-        @test !in([0, 90], unmarshal(Domain, d), with_ezone = true)
+        @test !in([0, 90], Domain(d), with_ezone = true)
 
     end # @testset "$domain" begin  
 

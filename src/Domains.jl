@@ -1,8 +1,8 @@
 
 module Domains
 
-using Unmarshal, Glob, JSON, Proj4
-import Base
+using  Glob, JSON, Proj4
+import Base: show
 
 export Domain,
        lonlat2lcc,
@@ -34,6 +34,43 @@ struct Domain
     EZONE::Int           
 end
 
+"""
+    Domain(d::Dict)
+
+Constructor for domains from Dictionaries
+"""
+Domain(d::Dict) = Domain(
+       d["NAME"],d["TSTEP"],d["NLON"], d["NLAT"], d["LONC"],
+       d["LATC"], d["LON0"], d["LAT0"],d["GSIZE"], d["EZONE"]
+    )
+
+
+"""
+    Domain(name::String)
+
+Constructor for `Domain`  
+"""
+Domain(name::String) =  Domain(JSON.parsefile(joinpath(jsondir, "$name.json")))
+
+
+function Base.show(io::IO,::MIME"text/plain",d::Domain)
+    println(io, "NAME = $(d.NAME)")
+    println(io, "NLON = $(d.NLON)")
+    println(io, "NLAT = $(d.NLAT)")
+    println(io, "LON0 = $(d.LON0)")
+    println(io, "LAT0 = $(d.LAT0)")
+    println(io, "LONC = $(d.LONC)")
+    println(io, "LATC = $(d.LATC)")
+  
+    #println(io, ), d.LON0, d.LAT0])
+    
+end
+
+
+
+
+
+
 
 """
     Plcc(d)
@@ -50,12 +87,6 @@ Returns longlat `Proj4.Projection`
 Plonlat() = Proj4.Projection("+proj=longlat +R=$Rearth")
 
 
-"""
-    readdomain(domainname)
-
-Returns a `Domain`  
-"""
-readdomain(domainname::String) =  unmarshal(Domain, JSON.parsefile(joinpath(jsondir, "$domainname.json")))
 
 """
     lonlat2lcc(d,lonlat)  

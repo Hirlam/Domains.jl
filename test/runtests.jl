@@ -3,7 +3,7 @@
 using Test
 using Domains, JSONSchema,JSON
 
-schema = JSONSchema.Schema(read(Domains.jsonschemafile, String), parentFileDirectory = dirname(Domains.jsonschemafile)) 
+schema = JSONSchema.Schema(read(Domains.jsonschemafile, String), parent_dir = dirname(Domains.jsonschemafile)) 
 
 # For now exclude non lambert domains from tests 
 for domain in filter(d->d ∉ ["SCANDINAVIA_ROTM","NORWAY_POLAR", "RCR_POLAR"], Domains.domains) 

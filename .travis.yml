@@ -1,8 +1,8 @@
 language: julia
 julia:
   - nightly
-  - 1.3
-  - 1.0.3
+  - 1.5
+  
 coveralls: true
 
 jobs:

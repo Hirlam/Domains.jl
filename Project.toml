@@ -4,12 +4,7 @@ authors = ["Roel Stappers <roel.stappers@met.no>"]
 version = "0.1.0"
 
 [deps]
-Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-DocumenterTools = "35a29f4d-8980-5a13-9543-d66fff28ecb8"
 Glob = "c27321d9-0574-5035-807b-f59d2c89b15c"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
-JSON2 = "2535ab7d-5cd8-5a07-80ac-9b1792aadce3"
 JSONSchema = "7d188eb4-7ad8-530c-ae41-71a32a6d4692"
 Proj4 = "9a7e659c-8ee8-5706-894e-f68f43bc57ea"
-Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

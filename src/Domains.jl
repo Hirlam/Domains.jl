@@ -11,7 +11,7 @@ export Domain,
        getgridpoints
 
 
-const moduledir = dirname(pathof(Domains))
+const moduledir = @__DIR__ 
 const jsondir = joinpath(moduledir, "json")
 const jsonschemafile = joinpath(moduledir, "jsonschema/domain.schema.json")
 const domains = getindex.(splitext.(basename.(Glob.glob("*.json", jsondir))), 1) # Array with domain names  

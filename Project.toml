@@ -1,7 +1,7 @@
 name = "Domains"
 uuid = "8047f4c8-798f-41f9-bdd5-7e8534b999d6"
 authors = ["Roel Stappers <roel.stappers@met.no>"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 Glob = "c27321d9-0574-5035-807b-f59d2c89b15c"

@@ -1,14 +1,10 @@
 
 module Domains
 
-using  Glob, JSON, Proj4
+using  Glob, JSON, Proj, JSON3
 import Base: show
 
-export Domain,
-       lonlat2lcc,
-       lcc2lonlat,
-       in,       
-       getgridpoints
+export Domain, isin
 
 
 const moduledir = @__DIR__ 
@@ -18,89 +14,30 @@ const domains = getindex.(splitext.(basename.(Glob.glob("*.json", jsondir))), 1)
 const Rearth = 6.37122e6
 
 """
-   Domain definitions
-"""
-struct Domain 
-    NAME::String
-    TSTEP::Int
-    NLON::Int
-    NLAT::Int
-    LONC::Float64
-    LATC::Float64
-    LON0::Float64
-    LAT0::Float64    
-    GSIZE::Float64
-    EZONE::Int           
-end
-
-"""
-    Domain(d::Dict)
-
-Constructor for domains from Dictionaries
-"""
-Domain(d::Dict) = Domain(
-       d["NAME"],d["TSTEP"],d["NLON"], d["NLAT"], d["LONC"],
-       d["LATC"], d["LON0"], d["LAT0"],d["GSIZE"], d["EZONE"]
-    )
-
-
-"""
     Domain(name::String)
 
-Constructor for `Domain`  
+Reads domain definition from json file and returns a `Domain` dictionary
 """
-Domain(name::String) =  Domain(JSON.parsefile(joinpath(jsondir, "$name.json")))
+Domain(name::String) =  JSON3.read(read(joinpath(jsondir, "$name.json")))
 
+""" 
+    projstr(d) 
 
-function Base.show(io::IO,::MIME"text/plain",d::Domain)
-    println(io, "NAME = $(d.NAME)")
-    println(io, "NLON = $(d.NLON)")
-    println(io, "NLAT = $(d.NLAT)")
-    println(io, "LON0 = $(d.LON0)")
-    println(io, "LAT0 = $(d.LAT0)")
-    println(io, "LONC = $(d.LONC)")
-    println(io, "LATC = $(d.LATC)")
-  
-    #println(io, ), d.LON0, d.LAT0])
-    
-end
-
-
-
-
-
+Return proj string for domain d. Call without arguments to get longlat proj string
+"""
+projstr(d) = "+proj=lcc +R=$Rearth +lat_0=$(d.LAT0) +lon_0=$(d.LON0) +lat_1=$(d.LAT0) +lat_2=$(d.LAT0) +a=$Rearth +b=$Rearth" 
+projstr()  = "+proj=longlat +R=$Rearth"
 
 
 """
-    Plcc(d)
+    lonlat2lcc(d)
 
-Returns a Lambert Conformal Conic `Proj4.Projection` based on domain definitions in `d`
+Returns a Proj.Transformation` based on domain definitions in `d` converts from lonlat to xy
 """
-Plcc(d::Domain) = Proj4.Projection("+proj=lcc +R=$Rearth +lat_0=$(d.LAT0) +lon_0=$(d.LON0) +lat_1=$(d.LAT0) +lat_2=$(d.LAT0) +a=$Rearth +b=$Rearth") 
-
-"""
-    Plonlat()
-
-Returns longlat `Proj4.Projection`
-"""
-Plonlat() = Proj4.Projection("+proj=longlat +R=$Rearth")
+lonlat2lcc(d) =Proj.Transformation(projstr(), projstr(d))  
 
 
-
-"""
-    lonlat2lcc(d,lonlat)  
-    
-Returns Lambert Conformal Conic projection coordinates for `lonlat` using domain definition from `d`
-"""
-lonlat2lcc(d::Domain, lonlat) = Proj4.transform(Plonlat(), Plcc(d),  lonlat)
-
-"""
-    lcc2lonlat(d,xy)  
-    
-Returns lonlat coordinates for Lambert Conformal Conic projection coordinates `xy` using domain definitions from `d`
-"""
-lcc2lonlat(d::Domain, xy) = Proj4.transform(Plcc(d), Plonlat(),  xy)
-
+lcc2lonlat(d) =Proj.Transformation(projstr(d), projstr())  
 
 """
     getgridpoints(d; gsize=d.GSIZE)
@@ -111,14 +48,50 @@ function getgridpoints(d; gsize = d.GSIZE)
     v = get_lcc_val(d) 
     xval = range(v.xl, stop = v.xr, step = gsize)
     yval = range(v.yb, stop = v.yt, step = gsize)
-    lcc = Plcc(d)
-    lonlat = Plonlat()   
-    return [Proj4.transform(lcc, lonlat, [x, y]) for x in xval for y in yval]
+    trans = lcc2lonlat(d) 
+    return [trans([x, y]) for x in xval for y in yval]
+end 
+
+"""
+
+    isin(lonlat, d; with_ezone = false)     
+
+Returns true if `lonlat` is inside Domain `d`
+"""
+function isin(lonlat, d; with_ezone::Bool = false)     
+    xl,xr,yt,yb,xre,yte = get_lcc_val(d)
+    trans = lonlat2lcc(d)
+    (xn, yn) = trans(lonlat) 
+
+    val = with_ezone ? (xl < xn < xre) && (yb < yn < yte) :  (xl < xn < xr) && (yb < yn < yt)
+    return val 
 end 
 
 
-include("in.jl")
-include("get_lcc_val.jl")
+"""
+    get_lcc_val(d)
+
+Returns a named tuple with boundary values of the domain in projected coordinates
+"""
+function get_lcc_val(d)
+    nlon, nlat   = d.NLON, d.NLAT    
+    lonc, latc   = d.LONC, d.LATC
+    gsize        = d.GSIZE
+    ezone        = d.EZONE
+    
+    trans = lonlat2lcc(d)
+    (xc, yc)   = trans([lonc,latc])
+     
+
+    xl  = xc - gsize * (nlon - ezone - 1) / 2
+    xr  = xc + gsize * (nlon - ezone - 1) / 2
+    yt  = yc + gsize * (nlat - ezone - 1) / 2
+    yb  = yc - gsize * (nlat - ezone - 1) / 2
+    xre = xr + gsize * ezone
+    yte = yt + gsize * ezone
+
+    return (xl = xl, xr = xr, yt = yt, yb = yb, xre = xre, yte = yte)
+end 
 
 end # module Domains
 

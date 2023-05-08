@@ -2,7 +2,6 @@
 module Domains
 
 using  Glob, JSON, Proj, JSON3
-import Base: show
 
 export Domain, isin
 

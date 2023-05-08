@@ -11,6 +11,8 @@ jobs:
       - uses: julia-actions/setup-julia@latest
         with:
           version: '1.9.0-rc1'
+      - name: Add Harmonie Registry
+        run: julia -e 'using Pkg; Pkg.Registry.add(RegistrySpec(url = "https://github.com/Hirlam/HarmonieRegistry.git"))'
       - uses: julia-actions/cache@v1
         with: 
           cache-compiled: "true"

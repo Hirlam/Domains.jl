@@ -1,0 +1,24 @@
+name: Documentation
+
+on: [push, pull_request]
+
+jobs:
+  Documenter:
+    if: github.repository == 'Hirlam/Domains.jl'    
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: julia-actions/setup-julia@latest
+        with:
+          version: '1.9.0-rc1'
+      - uses: julia-actions/cache@v1
+        with: 
+          cache-compiled: "true"
+      - uses: julia-actions/julia-buildpkg@v1
+      - name: Install Julia dependencies
+        run: julia --project=docs/ -e 'using Pkg; Pkg.instantiate()'
+      - name: Build and deploy 
+        run: julia --project=docs/ docs/make.jl  
+        env:
+          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }} # For authentication with SSH deploy key
+  
